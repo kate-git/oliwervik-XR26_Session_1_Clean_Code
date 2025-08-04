@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Game state variables
-    public bool gameOver = false;
-    public float gameTime = 0f;
+    public bool gameOver; //public bool gameOver = false;
+    public float gameTime; // public float gameTime = 0f;
 
     // UI elements directly managed by GameManager (tight coupling)
     [SerializeField]
@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour
 
     // Tightly coupled dependency to Player (violating Separation of Concerns)
     [SerializeField]
-    private Player player;
-
+    private PlayerScore playerScore;
     void Start()
     {
         // Initialize UI
@@ -27,12 +26,12 @@ public class GameManager : MonoBehaviour
         {
             gameStatusText.text = "Game Started!";
         }
-        if (player == null)
+        if (playerScore == null)
         {
-            player = FindFirstObjectByType<Player>();
-            if (player == null)
+            playerScore = FindFirstObjectByType<PlayerScore>();
+            if (playerScore == null)
             {
-                Debug.LogError("GameManager cannot find Player script!");
+                Debug.LogError("GameManager cannot find PlayerScore component!");
             }
         }
         if (gameOverPanel != null)
@@ -55,7 +54,7 @@ public class GameManager : MonoBehaviour
                 RestartGame();
             }
             // Win condition (tightly coupled)
-            if (player.GetScore() >= 30) // Direct access to player score
+            if (playerScore.GetScore() >= 30) // Direct access to player score
             {
                 WinGame();
             }
@@ -89,15 +88,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void WinGame()
+    private void WinGame()
     {
         if (!gameOver) // Ensure win can only happen once
         {
             gameOver = true;
-            Debug.Log("You Win! Score: " + player.GetScore()); // Direct access to player score
+            Debug.Log("You Win! Score: " + playerScore.GetScore()); // Direct access to player score
             if (gameStatusText != null)
             {
-                gameStatusText.text = "YOU WIN! Score: " + player.GetScore();
+                gameStatusText.text = "YOU WIN! Score: " + playerScore.GetScore();
             }
 
             Invoke(nameof(RestartGame), 2f); // Restart after 2 seconds
