@@ -952,7 +952,6 @@ GameObject:
   m_Component:
   - component: {fileID: 854150333}
   - component: {fileID: 854150332}
-  - component: {fileID: 854150334}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -977,7 +976,7 @@ MonoBehaviour:
   gameStatusText: {fileID: 1779772983}
   timerText: {fileID: 788424806}
   gameOverPanel: {fileID: 938857967}
-  player: {fileID: 0}
+  playerScore: {fileID: 1351524423}
 --- !u!4 &854150333
 Transform:
   m_ObjectHideFlags: 0
@@ -993,18 +992,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &854150334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854150331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4acd96049fa645c2b52bb7ccc009264e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &884752359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,16 +1765,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1351524420}
+  - component: {fileID: 1351524427}
+  - component: {fileID: 1351524424}
+  - component: {fileID: 1351524423}
+  - component: {fileID: 1351524425}
+  - component: {fileID: 1351524422}
+  - component: {fileID: 1351524426}
   - component: {fileID: 1351524418}
   - component: {fileID: 1351524417}
   - component: {fileID: 1351524416}
   - component: {fileID: 1351524421}
-  - component: {fileID: 1351524427}
-  - component: {fileID: 1351524426}
-  - component: {fileID: 1351524425}
-  - component: {fileID: 1351524424}
-  - component: {fileID: 1351524423}
-  - component: {fileID: 1351524422}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1926,6 +1913,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003682cadcaf4b81b3245d407e2f412e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 1751772313}
+  healthBar: {fileID: 1031782362}
+  score: {fileID: 1351524423}
+  health: {fileID: 1351524424}
 --- !u!114 &1351524423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1938,6 +1929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4acd96049fa645c2b52bb7ccc009264e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onScoreChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1351524424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,6 +1944,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e3ce8874194d2a99af3818360afaa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 30
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1351524425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1962,6 +1963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7346140b90c4c1e89aa13b83bdecb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 1351524424}
+  score: {fileID: 1351524423}
 --- !u!114 &1351524426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1974,6 +1977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf396e7c7a8a4631825e3ab0f3c5d907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 1351524424}
+  gameManager: {fileID: 854150332}
 --- !u!114 &1351524427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1986,6 +1991,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b963ab5edb945608bed91d284531e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  jumpForce: 10
+  rotationSpeed: 0.5
 --- !u!1 &1431434318
 GameObject:
   m_ObjectHideFlags: 0
