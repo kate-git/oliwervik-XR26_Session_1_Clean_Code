@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerScore : MonoBehaviour
+public class PlayerScore : MonoBehaviour, IScoreProvider
 {
     private int score = 0;
 

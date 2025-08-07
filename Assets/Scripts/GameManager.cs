@@ -16,9 +16,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel; 
 
-    // Tightly coupled dependency to Player (violating Separation of Concerns)
-    [SerializeField]
-    private PlayerScore playerScore;
+    [SerializeField] private MonoBehaviour scoreProviderRaw;
+    private IScoreProvider scoreProvider;
+
+    void Start()
+    {
+        scoreProvider = scoreProviderRaw as IScoreProvider;
+        if (scoreProvider == null)
+        {
+            Debug.LogError("Assigned object does not implement IScoreProvider");
+        }
+    }
     void Start()
     {
         // Initialize UI

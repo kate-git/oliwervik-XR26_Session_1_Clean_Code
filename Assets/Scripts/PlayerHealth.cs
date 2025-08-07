@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable, IHealthProvider
 {
     [SerializeField] private float maxHealth = 30f;
     private float currentHealth;
