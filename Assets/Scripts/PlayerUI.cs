@@ -15,7 +15,7 @@ public class PlayerUI : MonoBehaviour
         health.onHealthChanged.AddListener(UpdateHealthBar);
         score.onScoreChanged.AddListener(UpdateScoreText);
 
-        // Начальное значение
+        // Initial state
         UpdateScoreText(score.GetScore());
         UpdateHealthBar(health.GetHealth());
     }
