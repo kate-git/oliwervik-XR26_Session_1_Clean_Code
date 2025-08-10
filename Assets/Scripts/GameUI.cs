@@ -15,7 +15,7 @@ public class GameUI : MonoBehaviour
         if (gameStatusText != null)
             gameStatusText.text = "Game Started!";
         
-        GameManager.Instance.onGameOver.AddListener(ShowGameOver);
+        GameManager.Instance.onDeath.AddListener(ShowGameOver);
         GameManager.Instance.onGameWin.AddListener(ShowWin);
         
     }

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour, IGameStateHandler
     public static GameManager Instance { get; private set; }
     
     private IScoreProvider scoreProvider;
-    public UnityEvent onGameOver = new UnityEvent();
+    public UnityEvent onDeath = new UnityEvent();
     public UnityEvent<int> onGameWin = new UnityEvent<int>();
     
     [SerializeField] private TextMeshProUGUI gameStatusText;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour, IGameStateHandler
         gameOver = true;
         if (gameStatusText != null) gameStatusText.text = "GAME OVER!";
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
-        onGameOver?.Invoke();
+        onDeath?.Invoke();
         Invoke(nameof(RestartGame), 2f);
     }
 
@@ -73,20 +73,17 @@ public class GameManager : MonoBehaviour, IGameStateHandler
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
         
         onGameWin.Invoke(playerScore != null ? playerScore.GetScore() : 0);
-
-        //onGameWin?.Invoke(scoreProvider.GetScore());
         Invoke(nameof(RestartGame), 2f);
     }
 
-    public void RegisterEnemyCollision()
+    public void OnCollisionEnter()
     {
         if (gameOver) return;
 
         if (playerHealth != null && playerHealth.currentHealth <= 0)
             GameOver();
     }
-
-    // Победа при 30 очках
+    
     private void OnScoreChanged(int score)
     {
         if (score >= 30)
