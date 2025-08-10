@@ -3,27 +3,27 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour, IDamageable, IHealthProvider
 {
+    public UnityEvent onDeath= new UnityEvent();
+    public UnityEvent<float> onHealthChanged= new UnityEvent<float>();
+
     [SerializeField] private float maxHealth = 30f;
-    private float currentHealth;
+    public float currentHealth;
 
-    public UnityEvent onDeath;
-    public UnityEvent<float> onHealthChanged;
-
+    
     private void Start()
     {
         currentHealth = maxHealth;
-        onHealthChanged?.Invoke(currentHealth);
+        onHealthChanged.Invoke(currentHealth);
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        currentHealth = Mathf.Max(currentHealth, 0);
-        onHealthChanged?.Invoke(currentHealth);
+        onHealthChanged.Invoke(currentHealth);
 
         if (currentHealth <= 0)
         {
-            onDeath?.Invoke();
+            onDeath.Invoke();
         }
     }
 

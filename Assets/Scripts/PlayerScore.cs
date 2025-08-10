@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class PlayerScore : MonoBehaviour, IScoreProvider
 {
+    public UnityEvent<int> onScoreChanged= new UnityEvent<int>();
+
     private int score = 0;
-
-    public UnityEvent<int> onScoreChanged;
-
+    
     public void AddScore(int value)
     {
         score += value;

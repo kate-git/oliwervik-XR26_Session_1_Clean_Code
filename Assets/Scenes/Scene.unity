@@ -971,12 +971,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ddc5c574bf5bc42b27e1baf8973e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOver: 0
-  gameTime: 0
+  onGameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameWin:
+    m_PersistentCalls:
+      m_Calls: []
   gameStatusText: {fileID: 1779772983}
   timerText: {fileID: 788424806}
-  gameOverPanel: {fileID: 938857967}
+  gameOverPanel: {fileID: 1780318721}
   playerScore: {fileID: 1351524423}
+  playerHealth: {fileID: 1351524424}
+  gameTime: 0
+  gameOver: 0
 --- !u!4 &854150333
 Transform:
   m_ObjectHideFlags: 0
@@ -1771,6 +1778,7 @@ GameObject:
   - component: {fileID: 1351524425}
   - component: {fileID: 1351524422}
   - component: {fileID: 1351524426}
+  - component: {fileID: 1351524428}
   - component: {fileID: 1351524418}
   - component: {fileID: 1351524417}
   - component: {fileID: 1351524416}
@@ -1944,13 +1952,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e3ce8874194d2a99af3818360afaa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
   onDeath:
     m_PersistentCalls:
       m_Calls: []
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+  maxHealth: 30
+  currentHealth: 0
 --- !u!114 &1351524425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1978,7 +1987,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 1351524424}
-  gameManager: {fileID: 854150332}
 --- !u!114 &1351524427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1994,6 +2002,21 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 10
   rotationSpeed: 0.5
+--- !u!114 &1351524428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351524415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775027c11b474740a6c729cd1080ddbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 788424806}
+  gameStatusText: {fileID: 1779772983}
+  gameOverPanel: {fileID: 1780318721}
 --- !u!1 &1431434318
 GameObject:
   m_ObjectHideFlags: 0

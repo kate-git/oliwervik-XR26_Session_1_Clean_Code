@@ -12,6 +12,7 @@ public class PlayerUI : MonoBehaviour
     void Start()
     {
         healthBar.maxValue = 30f;
+        
         health.onHealthChanged.AddListener(UpdateHealthBar);
         score.onScoreChanged.AddListener(UpdateScoreText);
 

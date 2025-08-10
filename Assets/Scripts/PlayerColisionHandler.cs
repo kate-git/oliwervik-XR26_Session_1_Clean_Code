@@ -15,7 +15,8 @@ public class PlayerCollisionHandler : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            health.TakeDamage(10);
+            IDamageable damageable = GetComponent<IDamageable>();
+            damageable?.TakeDamage(10f);
             Destroy(collision.gameObject);
         }
     }

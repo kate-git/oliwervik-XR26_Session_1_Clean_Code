@@ -1,7 +1,5 @@
-namespace DefaultNamespace
+public interface IGameStateHandler
 {
-    public interface IGameStateHandler
-    {
-        void GameOver();
-    }
+    void GameOver();
+    void WinGame();
 }

@@ -1,4 +1,3 @@
-using DefaultNamespace;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
@@ -7,15 +6,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour, IGameStateHandler 
 {
     public static GameManager Instance { get; private set; }
-
-    // Game state variables
-    public bool gameOver; //public bool gameOver = false;
-    public float gameTime; // public float gameTime = 0f;
-
-    public UnityEvent onGameOver;
-    public UnityEvent<int> onGameWin;
     
     private IScoreProvider scoreProvider;
+    public UnityEvent onGameOver = new UnityEvent();
+    public UnityEvent<int> onGameWin = new UnityEvent<int>();
+    
+    [SerializeField] private TextMeshProUGUI gameStatusText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private PlayerScore playerScore;
+    [SerializeField] private PlayerHealth playerHealth;
+    
+    public float gameTime;
+    public bool gameOver;
 
     private void Awake()
     {
@@ -27,9 +30,14 @@ public class GameManager : MonoBehaviour, IGameStateHandler
 
     void Start()
     {
-        scoreProvider = FindObjectOfType<PlayerScore>();
         gameOver = false;
         gameTime = 0f;
+        
+        if (gameStatusText != null) gameStatusText.text = "Game Started!";
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        
+        if (playerScore != null)
+            playerScore.onScoreChanged.AddListener(OnScoreChanged);
     }
     
     
@@ -38,14 +46,11 @@ public class GameManager : MonoBehaviour, IGameStateHandler
         if (gameOver) return;
 
         gameTime += Time.deltaTime;
-
+        if (timerText != null)
+            timerText.text = "Time: " + Mathf.FloorToInt(gameTime) + "s";
+        
         if (Input.GetKeyDown(KeyCode.R))
             RestartGame();
-
-        if (scoreProvider != null && scoreProvider.GetScore() >= 30)
-        {
-            WinGame();
-        }
     }
 
     public void GameOver()
@@ -53,21 +58,41 @@ public class GameManager : MonoBehaviour, IGameStateHandler
         if (gameOver) return;
 
         gameOver = true;
+        if (gameStatusText != null) gameStatusText.text = "GAME OVER!";
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
         onGameOver?.Invoke();
         Invoke(nameof(RestartGame), 2f);
     }
 
-    private void WinGame()
+    public void WinGame()
     {
         if (gameOver) return;
 
         gameOver = true;
-        onGameWin?.Invoke(scoreProvider.GetScore());
+        if (gameStatusText != null) gameStatusText.text = "YOU WIN!";
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        
+        onGameWin.Invoke(playerScore != null ? playerScore.GetScore() : 0);
+
+        //onGameWin?.Invoke(scoreProvider.GetScore());
         Invoke(nameof(RestartGame), 2f);
     }
 
+    public void RegisterEnemyCollision()
+    {
+        if (gameOver) return;
+
+        if (playerHealth != null && playerHealth.currentHealth <= 0)
+            GameOver();
+    }
+
+    // Победа при 30 очках
+    private void OnScoreChanged(int score)
+    {
+        if (score >= 30)
+            WinGame();
+    }
     public void RestartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-    }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);    }
 }
